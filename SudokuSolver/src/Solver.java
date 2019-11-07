@@ -24,21 +24,30 @@ public class Solver {
 
 					if(tempCell.getNumber()==0) {
 						while(valueCounter < 10) {
-
-							if(getaGrid().isNumberInRow(valueCounter, rowCounter) 
-									|| getaGrid().isNumberInColumn(valueCounter, tempCell) 
-									|| getaGrid().isNumberInSquare(valueCounter, tempCell)) {
-								valueCounter++;
-							} else {
+							
+							if(getaGrid().threesTechniqueRow(valueCounter, tempCell)) {
+								getaGrid().getCellFromCoordinates(cellCounter, rowCounter).setNumber(valueCounter);
+								System.out.println("Added a " + valueCounter + " at: (" + cellCounter + "," + rowCounter + ") - BY 3S");
+								getaGrid().printGrid();
+								System.out.println("---------------------------------");
+								break;
+							} else if (getaGrid().threesTechniqueCol(valueCounter, tempCell)) {
+								getaGrid().getCellFromCoordinates(cellCounter, rowCounter).setNumber(valueCounter);
+								System.out.println("Added a " + valueCounter + " at: (" + cellCounter + "," + rowCounter + ") - BY 3S");
+								getaGrid().printGrid();
+								System.out.println("---------------------------------");
+								break;
+							} else if(getaGrid().canNumberGoHere(valueCounter, tempCell)) {
 								potentialNumberList.add(valueCounter);
-								valueCounter++;
 							}
+							valueCounter++;
+							
 						}
 
 						if(tempCell.getNumber()==0 && potentialNumberList.size()==1) {
 							getaGrid().getCellFromCoordinates(cellCounter, rowCounter).setNumber(potentialNumberList.get(0));
 							getaGrid().printGrid();
-							System.out.println("Added a " + potentialNumberList.get(0) + " at: (" + cellCounter + "," + rowCounter + ")");
+							System.out.println("Added a " + potentialNumberList.get(0) + " at: (" + cellCounter + "," + rowCounter + ") - BY REGULAR");
 							System.out.println("---------------------------------");
 						}
 					}

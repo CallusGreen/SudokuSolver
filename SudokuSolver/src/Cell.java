@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Cell {
 
 	// <----------------- Object Variables -----------------> //
@@ -5,12 +7,14 @@ public class Cell {
 	private int number;
 	private int xCoord;
 	private int yCoord;
+	private ArrayList<Integer> potentialNumbers;
 
 	// <------------------- Constructors -------------------> //
 	public Cell(int xCoord, int yCoord) {
 		this.number = 0;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		potentialNumbers = new ArrayList<Integer>();
 	}
 
 	public Cell() {
@@ -24,11 +28,32 @@ public class Cell {
 		} else {
 			output = " " + getNumber() + " ";
 		}
-
 		if(getxCoord() != 0 && (getxCoord()+1)%3==0) {
 			output = output + " ";
 		}
 		return output;
+	}
+	
+	public void addPotentialNumber(int num) {
+		boolean numberExists = false;
+		for(int tempNum : getPotentialNumbers()) {
+			if(tempNum==num) {
+				numberExists=true;
+			}
+		}
+		if(!numberExists) {
+			getPotentialNumbers().add(num);
+		}
+	}
+	
+	public boolean isNumPotentialNum(int num) {
+		boolean numberExistsInList = false;
+		for(int tempInt : getPotentialNumbers()) {
+			if(tempInt == num) {
+				numberExistsInList = true;
+			}
+		}
+		return numberExistsInList;
 	}
 
 	// <---------------- Getters & Setters -----------------> //
@@ -54,5 +79,13 @@ public class Cell {
 
 	public void setyCoord(int yCoord) {
 		this.yCoord = yCoord;
+	}
+
+	public ArrayList<Integer> getPotentialNumbers() {
+		return potentialNumbers;
+	}
+
+	public void setPotentialNumbers(ArrayList<Integer> potentialNumbers) {
+		this.potentialNumbers = potentialNumbers;
 	}
 }

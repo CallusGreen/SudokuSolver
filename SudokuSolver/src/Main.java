@@ -1,7 +1,7 @@
 public class Main {
 	public static void main(String[] args) {
 		Grid grid = new Grid();
-
+		/*
 		grid.placeNumberInCell(4, 0, 3);
 		grid.placeNumberInCell(5, 0, 2);
 		grid.placeNumberInCell(7, 0, 5);
@@ -40,8 +40,34 @@ public class Main {
 		grid.placeNumberInCell(2, 8, 2);
 		grid.placeNumberInCell(4, 8, 1);
 		grid.placeNumberInCell(8, 8, 9);
-
+		*/
+		
+		//expert
 		/*
+		grid.placeNumberInCell(2, 0, 5);
+		grid.placeNumberInCell(5, 0, 8);
+		grid.placeNumberInCell(0, 1, 1);
+		grid.placeNumberInCell(2, 1, 6);
+		grid.placeNumberInCell(5, 1, 3);
+		grid.placeNumberInCell(8, 1, 4);		
+		grid.placeNumberInCell(2, 2, 2);
+		grid.placeNumberInCell(8, 2, 7);
+		grid.placeNumberInCell(2, 3, 1);
+		grid.placeNumberInCell(5, 3, 4);
+		grid.placeNumberInCell(4, 4, 8);
+		grid.placeNumberInCell(7, 4, 6);
+		grid.placeNumberInCell(1, 5, 7);
+		grid.placeNumberInCell(0, 6, 9);
+		grid.placeNumberInCell(3, 6, 5);
+		grid.placeNumberInCell(4, 6, 3);
+		grid.placeNumberInCell(3, 7, 6);
+		grid.placeNumberInCell(6, 7, 8);
+		grid.placeNumberInCell(8, 7, 1);
+		grid.placeNumberInCell(4, 8, 2);
+		grid.placeNumberInCell(7, 8, 4);
+		grid.placeNumberInCell(8, 8, 9);
+		*/
+	
 		//hard 
 		grid.placeNumberInCell(1, 0, 6);
 		grid.placeNumberInCell(7, 0, 3);
@@ -68,11 +94,11 @@ public class Main {
 		grid.placeNumberInCell(2, 8, 1);
 		grid.placeNumberInCell(4, 8, 7);
 		grid.placeNumberInCell(8, 8, 4);
-		 */
 
-		/*
+
+		
 		//Medium
-
+/*
 		grid.placeNumberInCell(1, 0, 3);
 		grid.placeNumberInCell(2, 0, 9);
 		grid.placeNumberInCell(5, 0, 7);
@@ -103,10 +129,10 @@ public class Main {
 		grid.placeNumberInCell(2, 8, 5);
 		grid.placeNumberInCell(4, 8, 6);
 		grid.placeNumberInCell(8, 8, 2);
-		 */
+*/
 
 		Solver theSolver = new Solver(grid);
-
 		theSolver.start();
+		
 	}
 }

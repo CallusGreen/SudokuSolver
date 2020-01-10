@@ -1,7 +1,13 @@
+package logic;
+
+import javax.swing.SwingUtilities;
+
+import ui.UserInterface;
+
 public class Main {
 	public static void main(String[] args) {
 		Grid grid = new Grid();
-		/*
+/*
 		grid.placeNumberInCell(4, 0, 3);
 		grid.placeNumberInCell(5, 0, 2);
 		grid.placeNumberInCell(7, 0, 5);
@@ -40,10 +46,9 @@ public class Main {
 		grid.placeNumberInCell(2, 8, 2);
 		grid.placeNumberInCell(4, 8, 1);
 		grid.placeNumberInCell(8, 8, 9);
-		*/
+ 		*/
 		
 		//expert
-		/*
 		grid.placeNumberInCell(2, 0, 5);
 		grid.placeNumberInCell(5, 0, 8);
 		grid.placeNumberInCell(0, 1, 1);
@@ -66,8 +71,8 @@ public class Main {
 		grid.placeNumberInCell(4, 8, 2);
 		grid.placeNumberInCell(7, 8, 4);
 		grid.placeNumberInCell(8, 8, 9);
-		*/
-	
+		
+		/*
 		//hard 
 		grid.placeNumberInCell(1, 0, 6);
 		grid.placeNumberInCell(7, 0, 3);
@@ -94,11 +99,10 @@ public class Main {
 		grid.placeNumberInCell(2, 8, 1);
 		grid.placeNumberInCell(4, 8, 7);
 		grid.placeNumberInCell(8, 8, 4);
+		*/
 
-
-		
 		//Medium
-/*
+		/*
 		grid.placeNumberInCell(1, 0, 3);
 		grid.placeNumberInCell(2, 0, 9);
 		grid.placeNumberInCell(5, 0, 7);
@@ -131,8 +135,13 @@ public class Main {
 		grid.placeNumberInCell(8, 8, 2);
 */
 
-		Solver theSolver = new Solver(grid);
+		grid.printGrid();
+		Solver theSolver = new Solver(grid);		
 		theSolver.start();
+		
+		
+		//UserInterface ui = new UserInterface(grid);
+		//SwingUtilities.invokeLater(ui);
 		
 	}
 }

@@ -99,7 +99,15 @@ public class Cell {
 	}
 
 	public void setTwoPotentialNums(int[] twoPotentialNums) {
-		this.twoPotentialNums = twoPotentialNums;
+		boolean shouldSet = true;
+		for(int i=0; i<2; i++) {
+			if(getTwoPotentialNums()[i] != 0) {
+				shouldSet = false;
+			}
+		}
+		if(shouldSet) {
+			this.twoPotentialNums = twoPotentialNums;
+		}
 	}
 	
 	@Override

@@ -26,6 +26,47 @@ public class Grid {
 			add(tempRow);
 		}
 	}
+	
+	public void addNumbersToGrid() {
+		placeNumberInCell(4, 0, 3);
+		placeNumberInCell(5, 0, 2);
+		placeNumberInCell(7, 0, 5);
+		placeNumberInCell(8, 0, 7);
+		placeNumberInCell(2, 1, 5);
+		placeNumberInCell(3, 1, 1);
+		placeNumberInCell(0, 2, 2);
+		placeNumberInCell(1, 2, 8);
+		placeNumberInCell(2, 2, 1);
+		placeNumberInCell(3, 2, 7);
+		placeNumberInCell(4, 2, 4);
+		placeNumberInCell(5, 2, 5);
+		placeNumberInCell(7, 2, 9);
+		placeNumberInCell(8, 2, 6);
+		placeNumberInCell(4, 3, 7);
+		placeNumberInCell(2, 4, 8);
+		placeNumberInCell(5, 4, 9);
+		placeNumberInCell(6, 4, 7);
+		placeNumberInCell(7, 4, 6);
+		placeNumberInCell(1, 5, 4);
+		placeNumberInCell(3, 5, 5);
+		placeNumberInCell(5, 5, 1);
+		placeNumberInCell(8, 5, 8);
+		placeNumberInCell(0, 6, 5);
+		placeNumberInCell(2, 6, 3);
+		placeNumberInCell(3, 6, 9);
+		placeNumberInCell(4, 6, 8);
+		placeNumberInCell(5, 6, 4);
+		placeNumberInCell(7, 6, 7);
+		placeNumberInCell(0, 7, 6);
+		placeNumberInCell(2, 7, 4);
+		placeNumberInCell(4, 7, 5);
+		placeNumberInCell(5, 7, 7);
+		placeNumberInCell(7, 7, 3);
+		placeNumberInCell(8, 7, 1);
+		placeNumberInCell(2, 8, 2);
+		placeNumberInCell(4, 8, 1);
+		placeNumberInCell(8, 8, 9);
+	}
 
 	public ArrayList<Cell> getColumn(int colNum){
 		ArrayList<Cell> theColumn = new ArrayList<Cell>();
@@ -88,7 +129,7 @@ public class Grid {
 				}
 			}
 			if(numCells == 1) {
-				getCellFromCoordinates(onlyCell.getxCoord(), onlyCell.getyCoord()).setNumber(i);
+				setNumberOnCell(onlyCell, i);
 				System.out.println("Added a " + onlyCell.getNumber() + " at: " + onlyCell.toCoords() + " - BY NEW SQUARE METHOD");
 				printGrid();
 				System.out.println("---------------------------------");
@@ -101,14 +142,22 @@ public class Grid {
 	public ArrayList<Cell> removeFullCellsFromList(ArrayList<Cell> list){
 
 		ArrayList<Cell> theList = new ArrayList<>();
-		
+
 		for(Cell tempCell : list) {
 			if(tempCell.getNumber() == 0) {
 				theList.add(tempCell);
 			}
 		}
-		
+
 		return theList;
+	}
+	
+	public void printCellList(ArrayList<Cell> list) {
+		
+		for(Cell tempCell : list) {
+			System.out.println(tempCell.potentialValuesToString());
+		}
+		
 	}
 
 	public boolean isOnlyOneCellInRowValid(Cell cell) {
@@ -131,7 +180,7 @@ public class Grid {
 				}
 			}
 			if(numCells == 1) {
-				getCellFromCoordinates(onlyCell.getxCoord(), onlyCell.getyCoord()).setNumber(i);
+				setNumberOnCell(onlyCell, i);
 				System.out.println("Added a " + onlyCell.getNumber() + " at: " + onlyCell.toCoords() + " - BY NEW ROW METHOD");
 				printGrid();
 				System.out.println("---------------------------------");
@@ -161,7 +210,7 @@ public class Grid {
 				}
 			}
 			if(numCells == 1) {
-				getCellFromCoordinates(onlyCell.getxCoord(), onlyCell.getyCoord()).setNumber(i);
+				setNumberOnCell(onlyCell, i);
 				System.out.println("Added a " + onlyCell.getNumber() + " at: " + onlyCell.toCoords() + " - BY NEW COL METHOD");
 				printGrid();
 				System.out.println("---------------------------------");
@@ -310,10 +359,70 @@ public class Grid {
 		if(isNumberInRow(theNumber, theCell) 
 				|| isNumberInColumn(theNumber, theCell) 
 				|| isNumberInSquare(theNumber, theCell)
+				|| colContainsTwoCellsWithSameNakedNumber(theCell, theNumber)
+				|| rowContainsTwoCellsWithSameNakedNumber(theCell, theNumber)
+				|| squareContainsTwoCellsWithSameNakedNumber(theCell, theNumber)
 				|| theCell.getNumber()!= 0) {
 			numberCanGoHere = false;
 		}
 		return numberCanGoHere;
+	}
+
+	public boolean colContainsTwoCellsWithSameNakedNumber(Cell theCell, int theNumber) {
+
+		if(doesColHaveDoubleNakedPair(theCell)) {
+			ArrayList<Cell> list = getColumn(theCell.getxCoord());
+			int numCellsSharingNumber = 0;
+
+			for(Cell tempCell : list) {
+				if(!theCell.equals(tempCell) && tempCell.isNumPotentialNum(theNumber)) {
+					numCellsSharingNumber++;
+				}
+			}
+			if(numCellsSharingNumber >= 2) {
+				return true;
+			}	
+		}
+		return false;
+	}
+
+	public boolean rowContainsTwoCellsWithSameNakedNumber(Cell theCell, int theNumber) {
+
+		if(doesRowHaveDoubleNakedPair(theCell)) {
+			ArrayList<Cell> list = getTheGrid().get(theCell.getyCoord()).getTheRow();
+			int numCellsSharingNumber = 0;
+
+			for(Cell tempCell : list) {
+				if((!theCell.equals(tempCell)) && tempCell.isNumPotentialNum(theNumber)) {
+					numCellsSharingNumber++;
+				}
+			}
+			if(numCellsSharingNumber >= 2) {
+				return true;
+			}	
+		}
+		return false;
+	}
+
+	// Cells 0,8 and 2,8 contain 3 so its not allowed to go there?
+	// This needs to be changed, 
+	
+	public boolean squareContainsTwoCellsWithSameNakedNumber(Cell theCell, int theNumber) {
+
+		if(doesSquareHaveDoubleNakedPair(theCell)) {
+			ArrayList<Cell> list = getSquareFromCoords(theCell.getxCoord(), theCell.getyCoord());
+			int numCellsSharingNumber = 0;
+
+			for(Cell tempCell : list) {
+				if(!theCell.equals(tempCell) && tempCell.isNumPotentialNum(theNumber)) {
+					numCellsSharingNumber++;
+				}
+			}
+			if(numCellsSharingNumber >= 2) {
+				return true;
+			}	
+		}
+		return false;
 	}
 
 	public boolean isNumberInRow(int theNumber, Cell theCell) {
@@ -359,7 +468,7 @@ public class Grid {
 		updatedCol = doesListContainCellsWithSameNakedPair(updatedCol);
 		if(updatedCol.size() == 2) {
 			if(cellsShareTheSameTwoNumbers(updatedCol.get(0), updatedCol.get(1))) {
-				printNakedPairsInGrid(updatedCol);
+				//printNakedPairsInGrid(updatedCol);
 				return true;
 			}
 		}
@@ -373,15 +482,16 @@ public class Grid {
 
 		updatedRow = removeFullCellsFromList(theRow);
 		updatedRow = doesListContainCellsWithSameNakedPair(updatedRow);
+		
 		if(updatedRow.size() == 2) {
 			if(cellsShareTheSameTwoNumbers(updatedRow.get(0), updatedRow.get(1))) {
-				printNakedPairsInGrid(updatedRow);
+				//printNakedPairsInGrid(updatedRow);
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean doesSquareHaveDoubleNakedPair(Cell cell) {
 
 		ArrayList<Cell> theSquare = getSquareFromCoords(cell.getxCoord(), cell.getyCoord());
@@ -391,7 +501,7 @@ public class Grid {
 		updatedSquare = doesListContainCellsWithSameNakedPair(updatedSquare);
 		if(updatedSquare.size() == 2) {
 			if(cellsShareTheSameTwoNumbers(updatedSquare.get(0), updatedSquare.get(1))) {
-				printNakedPairsInGrid(updatedSquare);
+				//printNakedPairsInGrid(updatedSquare);
 				return true;
 			}
 		}
@@ -435,6 +545,39 @@ public class Grid {
 			}
 		}
 		return pairedCells;
+	}
+	
+	public boolean onlyTwoPlacesForNakedPair(Cell cell, int number) {
+		
+		ArrayList<Cell> row = getTheGrid().get(cell.getyCoord()).getTheRow();
+		
+		ArrayList<Cell> availableCells = removeFullCellsFromList(row);
+		
+		if(availableCells.size() == 2) {
+			return true;
+		}
+		
+		int numberOfAvailableSquares = 0;
+		
+		for(Cell tempCell : availableCells) {
+			if(canNumberGoHere(number, tempCell)) {
+				numberOfAvailableSquares++;
+			}
+		}
+		
+		if(numberOfAvailableSquares == 2) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void setNumberOnCell(Cell cell, int number) {
+		
+		cell.setNumber(number);
+		
+		int[] zeroArray = {0,0};
+		cell.setTwoPotentialNums(zeroArray);
 	}
 
 	public boolean doesCellHaveNakedPair(Cell tempCell) {

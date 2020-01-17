@@ -1,9 +1,5 @@
 package logic;
 
-import javax.swing.SwingUtilities;
-
-import ui.UserInterface;
-
 public class Main {
 	public static void main(String[] args) {
 		Grid grid = new Grid();
